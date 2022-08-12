@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1 class="my-4" >Update task "{{task.title}}"</h1>
+
+  <div class="container">
+    <form method="post" action="/update/{{task.id}}">
+        <div class="row d-flex btn-block mb-5">
+            <div class="col-10">
+                <input type="text" value="{{task.title}}" name="title" placeholder="Title" class="form-control" placeholder-right="Task title"/>
+            </div>
+            <div class="col-2">
+                <input type="button" value="Update" class="btn btn-success"/>
+            </div>    
+        </div>
+    </form>
+  </div>
+
+
+{% endblock body %}

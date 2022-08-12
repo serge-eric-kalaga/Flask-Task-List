@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "todo",
+            "database": "${workspaceFolder:FlaskPractice}/todo.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
