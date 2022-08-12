@@ -13,7 +13,7 @@
                 <input type="text" name="title" placeholder="Title" class="form-control" placeholder-right="Task title"/>
             </div>
             <div class="col-2">
-                <input type="button" value="Ajouter" class="btn btn-success"/>
+                <input type="submit" value="Ajouter" class="btn btn-success"/>
             </div>    
         </div>
     </form>
@@ -29,18 +29,22 @@
 
         </thead>
         <tbody>
-            {% for task in tasks %}
-                <tr>
-                    <td>{{task.id}}</td>
-                    <td>{{task.title}}</td>
-                    <td>{{task.date}}</td>
-                    <td class="d-flex justify-content-around">
-                        <a class="btn btn-primary" href="/show/{{task.id}}/">Get</a>
-                        <a class="btn btn-secondary" href="/update/{{task.id}}/">Edit</a>
-                        <a class="btn btn-danger" href="/delete/{{task.id}}/">Delete</a>
-                    </td>
-                </tr>
-            {% endfor %}
+            {% if tasks %}
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{task.id}}</td>
+                        <td>{{task.title}}</td>
+                        <td>{{task.date}}</td>
+                        <td class="align-items-center pr-0">
+                            <a class="btn btn-primary" href="/show/{{task.id}}/">Get</a>
+                            <a class="btn btn-secondary" href="/update/{{task.id}}/">Edit</a>
+                            <a class="btn btn-danger mr-0" href="/delete/{{task.id}}/">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                    <tr><td class="text-center" colspan="4">Aucune tache à faire pour le moment !</td></tr>
+            {% endif %}
         </tbody>
     </table>
   </div>
