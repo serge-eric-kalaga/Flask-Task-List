@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to flask task list app </title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+</head>
+<body class="bg-primary">
+
+
+    
+
+
+<section class="vh-100" style="background-color: #508bfc;">
+
+
+    <div class="container h-100">
+
+
+
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+
+        <div class="container text-center page-title h1 pt-5 mb-5 pb-0 text-light shadow-3">Simple task list</div>
+
+          <div class="card shadow-2-strong" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <h3 class="mb-5">Login / Register </h3>
+  
+              <form action="/login" method="post">
+
+                <div class="form-outline mb-3">
+                    <input type="text" name="username" id="username" class="form-control form-control-lg" placeholder="Username" autocomplete="off"/>
+                  </div>
+      
+                  <div class="form-outline mb-4">
+                    <input name="password" type="password" id="password" class="form-control form-control-lg" placeholder="Password"  autocomplete="off" />
+                  </div>
+      
+                  <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+              </form>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    
+</body>
+</html>
