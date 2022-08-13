@@ -53,6 +53,12 @@ def update(id):
    return redirect("/")
 
 
+@app.route("/<int:id>/", methods=["GET",])
+def detail(id):
+   task = Task.query.get_or_404(id)
+   return render_template("detail.html", task=task)
+
+
 @app.route("/contact")
 def contact():
    return render_template("contact.html")

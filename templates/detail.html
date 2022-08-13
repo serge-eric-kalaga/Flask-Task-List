@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<a class="btn btn-primary my-3" href="/">Retour</a>
+
+<h1 class="page-title mt-2 mb-4">Task detail</h1>
+
+<h3>ID : <strong>{{ task.id }}</strong> </h3>
+<h3>Titre : <strong>{{ task.title }}</strong> </h3>
+<h3>Date : <strong>{{ task.date }}</strong> </h3>
+  
+
+{% endblock body %}
