@@ -1,4 +1,5 @@
 from os import rename
+import re
 from urllib import request
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -13,21 +14,23 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = "23_mars_2000"
 db = SQLAlchemy(app)
 
+if __name__ == "__main__":
+   db.create_all()
+   app.run(debug=True)
+
 
 class User(db.Model):
       id = db.Column(db.Integer, primary_key=True)
-      username = db.Column(db.String(255), nullable=False, primary_key=True)
+      username = db.Column(db.String(255), nullable=False)
       password = db.Column(db.String(255), nullable=False)
-      
-      task = db.relationship("Task", backref="user")
+      task = db.relationship("Task", backref="user", lazy=True)
 
 
 class Task(db.Model):
        id = db.Column(db.Integer, primary_key=True)
        title = db.Column(db.String(255), nullable=False)
        date = db.Column(db.DateTime, default=datetime.now)
-       
-       user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+       user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
        
        def __repr__(self) -> str:
            return self.title
@@ -41,38 +44,51 @@ def login():
       username = request.form['username'] 
       password = request.form['password']
       
-      # voir si user existe
-      if db.session.query(User.id).filter_by(username=username, password=password) is not None:
+      # voir si user existe , password=password
+      if  User.query.filter_by(username=username, password=password).count() > 0:
          session['username'] = username
          session['password'] = password
+         user_logged_id = User.query.filter_by(username=username).first().id
+         session['user_logged_id'] = user_logged_id
          # print("------------" + session['username'])
          return redirect("/")
       else : 
          session['username'] = username
          session['password'] = password
-         db.session.create(User(username=username, password=password))
+         db.session.add(User(username=username, password=password))
          db.session.commit()
+         user_logged_id = User.query.filter_by(username=username).first().id
+         session['user_logged_id'] = user_logged_id
          return redirect("/")
          
-   return render_template("login.html")
+   return render_template("login.html", username = session.get('username'))
+
+
+@app.route("/logout")
+def logout():
+   session.clear()
+   return redirect("/login")
+
 
 
 @app.route("/", methods = ["GET", "POST"])
 def index():
    
-   if "user" and "password"  in session :
+   if "username" and "password"  in session :
        
       if request.method == "POST" :
          title = request.form['title'] 
-         task = Task(title=title)
+         user = User.query.filter_by(username=session.get("username")).first()
+         # print(user_logged_id)
+         task = Task(title=title, user=user)
          db.session.add(task)
          db.session.commit()
          return redirect("/")
             
-            
-      user_logged_username = session["username"]
-      user_logged_id = User.query.filter_by(username=user_logged_username)[0].id
-      tasks = Task.query.filter(user_id=user_logged_id).order_by(Task.date)
+      # Filtrer les task en fonction de l'utilisateur connecte  
+      user_logged_id = session.get("user_logged_id")
+      print(session["user_logged_id"])
+      tasks = Task.query.filter_by(user_id=user_logged_id).order_by(Task.date)
       return render_template("index.html", tasks=tasks)
    
    return redirect("/login")
@@ -81,36 +97,59 @@ def index():
 
 @app.route("/delete/<int:id>/")
 def delete(id):
-   task = Task.query.get_or_404(id)
-   db.session.delete(task)
-   db.session.commit()
-   return redirect("/")
+   if "username" and "password"  in session :
+      task = Task.query.get_or_404(id)
+      db.session.delete(task)
+      db.session.commit()
+      return redirect("/")
+   return redirect("/login")
 
 
 @app.route("/update/<int:id>/", methods=["POST", "GET"])
 def update(id):
-   task = Task.query.get_or_404(id)
-   if request.method == "POST":
-      task.title = request.form["title"]
-      db.session.commit()
-   else:
-      return render_template("update.html", task=task)
-   return redirect("/")
+   if "username" and "password"  in session :
+      task = Task.query.get_or_404(id)
+      if request.method == "POST":
+         task.title = request.form["title"]
+         db.session.commit()
+      else:
+         return render_template("update.html", task=task)
+      return redirect("/")
+   return redirect("/login")
 
 
 @app.route("/<int:id>/", methods=["GET",])
 def detail(id):
-   task = Task.query.get_or_404(id)
-   return render_template("detail.html", task=task)
+   if "username" and "password"  in session :
+      task = Task.query.get_or_404(id)
+      return render_template("detail.html", task=task)
+   return redirect("/login")
 
 
 @app.route("/contact")
 def contact():
-   return render_template("contact.html")
+   if "username" and "password"  in session :
+      return render_template("contact.html")
+   return redirect("/login")
 
 @app.route("/about")
 def about():
-   return render_template("about.html")
+   if "username" and "password"  in session :
+      return render_template("about.html")
+   return redirect("/login")
 
-if __name__ == "__main__":
-    app.run(debug=True)
+
+
+
+
+
+
+
+db.create_all()
+
+# db.session.add(User(username="serge", password="1234"))
+# db.session.add(User(username="eric", password="1234"))
+# db.session.add(Task(title="task 1", user_id=1))
+# db.session.add(Task(title="task 2", user_id=1))
+
+# db.session.commit()

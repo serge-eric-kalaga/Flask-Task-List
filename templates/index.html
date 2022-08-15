@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<h1>Accueil</h1>
+<h1>Welcome, {{ session['username']|upper }} </h1>
 
 {%if tasks%} 
   <div class="container mt-4">
