@@ -35,11 +35,11 @@
               <form action="/login" method="post">
 
                 <div class="form-outline mb-3">
-                    <input type="text" name="username" id="username" class="form-control form-control-lg" placeholder="Username" autocomplete="off"/>
+                    <input min="4" max="8" type="text" name="username" id="username" class="form-control form-control-lg" placeholder="Username" autocomplete="off"/>
                   </div>
       
                   <div class="form-outline mb-4">
-                    <input name="password" type="password" id="password" class="form-control form-control-lg" placeholder="Password"  autocomplete="off" />
+                    <input min='4' name="password" type="password" id="password" class="form-control form-control-lg" placeholder="Password"  autocomplete="off" />
                   </div>
       
                   <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>

@@ -4,50 +4,44 @@
 
 <h1>Welcome, {{ session['username']|upper }} </h1>
 
-{%if tasks%} 
   <div class="container mt-4">
 
     <form action="/" method="post">
         <div class="row d-flex btn-block mb-5">
-            <div class="col-10">
+            <div class=" col-sm-12 col-lg-10">
                 <input type="text" name="title" placeholder="Title" class="form-control" placeholder-right="Task title"/>
             </div>
-            <div class="col-2">
-                <input type="submit" value="Ajouter" class="btn btn-success"/>
+            <div class=" col-sm-12 col-lg-2 mt-2 mt-md-0">
+                <input type="submit" value="Ajouter" class="btn btn-success btn-sm-block"/>
             </div>    
         </div>
     </form>
 
-    <table data-toggle="table" class="table table-striped table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
+        <table data-toggle="table" class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
 
-        </thead>
-        <tbody>
-            {% if tasks %}
-                {% for task in tasks %}
-                    <tr>
-                        <td>{{task.id}}</td>
-                        <td>{{task.title}}</td>
-                        <td>{{task.date}}</td>
-                        <td class="align-items-center pr-0">
-                            <a class="btn btn-primary" href="/{{task.id}}/">Get</a>
-                            <a class="btn btn-secondary" href="/update/{{task.id}}/">Edit</a>
-                            <a class="btn btn-danger mr-0" href="/delete/{{task.id}}/">Delete</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            {% else %}
-                    <tr><td class="text-center" colspan="4">Aucune tache à faire pour le moment !</td></tr>
-            {% endif %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>{{task.id}}</td>
+                            <td>{{task.title}}</td>
+                            <td>{{task.date}}</td>
+                            <td class="align-items-center pr-0">
+                                <a class="btn btn-primary" href="/{{task.id}}/">Get</a>
+                                <a class="btn btn-secondary" href="/update/{{task.id}}/">Edit</a>
+                                <a class="btn btn-danger mr-0" href="/delete/{{task.id}}/">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
   </div>
-{% endif %}
 
 {% endblock body %}

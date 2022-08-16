@@ -5,6 +5,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask import request, redirect, session
 from datetime import datetime
+from flask import url_for
 
 
 app = Flask(__name__)
@@ -40,6 +41,8 @@ class Task(db.Model):
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
+   if "username" and "password" in session :
+      return redirect("/")
    if request.method == "POST":
       username = request.form['username'] 
       password = request.form['password']
