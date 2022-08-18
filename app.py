@@ -85,9 +85,10 @@ def index():
        
       if request.method == "POST" :
          title = request.form['title'] 
+         description = request.form['description'] 
          user = User.query.filter_by(username=session.get("username")).first()
          # print(user_logged_id)
-         task = Task(title=title, user=user)
+         task = Task(title=title, description=description, user=user)
          db.session.add(task)
          db.session.commit()
          return redirect("/")
