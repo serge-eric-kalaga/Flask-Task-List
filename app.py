@@ -118,6 +118,7 @@ def update(id):
       task = Task.query.get_or_404(id)
       if request.method == "POST":
          task.title = request.form["title"]
+         task.description = request.form["description"]
          db.session.commit()
       else:
          return render_template("update.html", task=task)
