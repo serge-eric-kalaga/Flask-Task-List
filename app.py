@@ -47,6 +47,9 @@ def login():
       username = request.form['username'] 
       password = request.form['password']
       
+      if username == "" or password == "" :
+            return redirect("/login")
+      
       # voir si user existe , password=password
       if  User.query.filter_by(username=username, password=password).count() > 0:
          session['username'] = username
