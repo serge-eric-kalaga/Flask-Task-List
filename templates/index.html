@@ -32,19 +32,27 @@
 
             </thead>
             <tbody>
-                    {% for task in tasks %}
-                        <tr>
-                            <td>{{task.id}}</td>
-                            <td>{{task.title}}</td>
-                            <td>{{task.description}}</td>
-                            <td>{{task.date}}</td>
-                            <td class="align-items-center pr-0">
-                                <a class="btn btn-primary" href="/{{task.id}}/">Get</a>
-                                <a class="btn btn-secondary" href="/update/{{task.id}}/">Edit</a>
-                                <a class="btn btn-danger mr-0" href="/delete/{{task.id}}/">Delete</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                    {% if tasks_len == 0 %}
+                        <div class="container">
+                            <h3 class="text-warning">No task to show </h3>
+                        </div>
+                    {% else %}
+
+                        {% for task in tasks %}
+                            <tr>
+                                <td>{{task.id}}</td>
+                                <td>{{task.title}}</td>
+                                <td>{{task.description}}</td>
+                                <td>{{task.date}}</td>
+                                <td class="align-items-center pr-0">
+                                    <a class="btn btn-primary" href="/{{task.id}}/">Get</a>
+                                    <a class="btn btn-secondary" href="/update/{{task.id}}/">Edit</a>
+                                    <a class="btn btn-danger mr-0" href="/delete/{{task.id}}/">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                    {% endif %}
             </tbody>
         </table>
   </div>

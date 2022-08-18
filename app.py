@@ -97,7 +97,8 @@ def index():
       user_logged_id = session.get("user_logged_id")
       print(session["user_logged_id"])
       tasks = Task.query.filter_by(user_id=user_logged_id).order_by(Task.date)
-      return render_template("index.html", tasks=tasks)
+      tasks_len = Task.query.filter_by(user_id=user_logged_id).count()
+      return render_template("index.html", tasks=tasks, tasks_len=tasks_len)
    
    return redirect("/login")
    
