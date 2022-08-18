@@ -50,7 +50,7 @@
                                 <td>{{task.id}}</td>
                                 <td>{{task.title}}</td>
                                 <td>{{task.description}}</td>
-                                <td>{{task.date}}</td>
+                                <td>{{task.date.strftime('%Y-%m-%d')}}</td>
                                 <td class="align-items-center pr-0">
                                     <a class="btn btn-primary" href="/{{task.id}}/">Get</a>
                                     <a class="btn btn-secondary" href="/update/{{task.id}}/">Edit</a>
