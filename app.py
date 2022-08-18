@@ -30,6 +30,7 @@ class User(db.Model):
 class Task(db.Model):
        id = db.Column(db.Integer, primary_key=True)
        title = db.Column(db.String(255), nullable=False)
+       description = db.Column(db.Text, nullable=True)
        date = db.Column(db.DateTime, default=datetime.now)
        user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
        
