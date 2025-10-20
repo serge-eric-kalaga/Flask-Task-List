@@ -11,13 +11,10 @@ from flask import url_for
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 app.secret_key = "23_mars_2000"
-db = SQLAlchemy(app)
 
-if __name__ == "__main__":
-   db.create_all()
-   app.run(debug=False)
+db = SQLAlchemy(app)
 
 
 class User(db.Model):
@@ -155,7 +152,7 @@ def about():
 
 
 
-db.create_all()
+# db.create_all()
 
 # db.session.add(User(username="serge", password="1234"))
 # db.session.add(User(username="eric", password="1234"))
@@ -163,3 +160,10 @@ db.create_all()
 # db.session.add(Task(title="task 2", user_id=1))
 
 # db.session.commit()
+
+
+if __name__ == "__main__":
+
+   with app.app_context():
+       db.create_all()
+   app.run(debug=False)
